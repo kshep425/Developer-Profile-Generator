@@ -1,0 +1,29 @@
+{
+  "name": "developer-profile-generator",
+  "version": "1.0.0",
+  "description": "A command-line application that dynamically generates a PDF profile from a GitHub username.",
+  "main": "githubapi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kshep425/Developer-Profile-Generator.git"
+  },
+  "keywords": [
+    "profile",
+    "github",
+    "resume"
+  ],
+  "author": "Keisha Shepherd kshep425",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kshep425/Developer-Profile-Generator/issues"
+  },
+  "homepage": "https://github.com/kshep425/Developer-Profile-Generator#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "github-api": "^3.3.0",
+    "inquirer": "^7.0.0"
+  }
+}
