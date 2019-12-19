@@ -2,7 +2,13 @@
 const GitHub = require('github-api');
 const inquirer = require("inquirer");
 const fs = require("fs");
-const HTMLToPDF = require("html-to-pdf");
+// const phantomjs = require('phantom');
+// var htmlToPdf = require("htmltopdf");
+
+// Set Debug Mode
+//htmlToPdf.setDebug(true)
+// Set Output Encoding
+//htmlToPdf.setOutputEncoding('UTF-8');
 
 var token = process.env.GHAPITOKEN;
 var gh = new GitHub({
@@ -83,6 +89,8 @@ function generate_profile() {
                         background-color: white;
                         padding: 5%;
                         border-radius: 10%;
+                        height:100vh;
+
                     }
 
                     header {
@@ -100,14 +108,17 @@ function generate_profile() {
                     #profile_pic_url {
                         float: right;
                         width: 47.5%;
+                        height: 100%;
                         border: 10px solid ${profile_data.color};
                         border-radius: 10%;
+                        object-fit: cover;
                     }
 
                     #profile_info {
                         width: 45%;
                         margin-left: 2.5%;
                         margin-right: 2.5%;
+                        height: 90%;
                     }
 
                     #name {
@@ -254,19 +265,60 @@ function generate_profile() {
             </body>
 
             </html>`
-
-
                 let filename = `${profile_data.user_name}_profile.html`
+                let filename_pdf = `./${profile_data.user_name}_profile.pdf`
+
+                //
+                // htmlToPdf.convertHTMLString(html, filename_pdf,
+                //     function (error, success) {
+                //         console.log("Writing the pdf file: " + filename_pdf)
+                //         if (error) {
+                //             console.log('Oh noes! Errorz!');
+                //             console.log(error);
+                //         } else {
+                //             console.log('Woot! Success!');
+                //             console.log(success);
+                //         }
+                //     }
+                // );
+
                 fs.writeFile(filename, html, function (err) {
                     if (err) {
                         return console.log(err);
                     }
                     console.log("Wrote " + filename)
+
+                    fs.readFile(filename, function (err, data) {
+                        if (err) {
+                            console.log("Error")
+                        }
+                        console.log('Read File')
+
+                        // fs.readFile('file.html', function (err, data) {
+                        //     htmltopdf.createFromHtml(data, "pdfName.pdf", function (err, success) {
+                        //         ... do stuff
+                        //     });
+                        // // });
+
+                        // // convert file to pdf
+                        // htmlToPdf.createFromHtml(data, filename_pdf, function (error, success) {
+                        //     if (error) {
+                        //         console.log('Oh noes! Errorz!');
+                        //         console.log(error);
+                        //     } else {
+                        //         console.log('Woot! Success!');
+                        //         console.log(success);
+                        //     }
+                        // })
+                    });
                 });
 
-            // convert file to pdf
 
             }).catch(err => console.error(err));
+        })
+        .catch((err) => {
+            console.log('Something went terribly wrong;  Is your username correct?')
+            console.log(err)
         });
 };
 
